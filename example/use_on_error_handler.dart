@@ -3,6 +3,7 @@ import 'package:theater_task/theater_task.dart';
 void main() async {
   late Task task;
 
+  //
   task = await Task.run<void>((context) {
     throw FormatException();
   }, onError: (error) async {
@@ -11,5 +12,6 @@ void main() async {
     task.dispose();
   });
 
+  //
   await task.result();
 }

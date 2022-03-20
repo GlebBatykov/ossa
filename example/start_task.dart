@@ -2,7 +2,14 @@ import 'package:theater_task/theater_task.dart';
 
 void main() async {
   //
-  var task = await Task.run<double>((context) => 3 * 7);
+  var task = Task<String>((context) {
+    return 'Hello, world!';
+  });
+
+  //
+  await task.initialize();
+  //
+  await task.start();
 
   //
   var result = await task.result();
