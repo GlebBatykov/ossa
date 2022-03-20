@@ -24,8 +24,6 @@ class IsolateSupervisor {
 
   final Queue _messageQueue = Queue();
 
-  bool _isStarted = false;
-
   bool _isInitialized = false;
 
   bool _isPaused = false;
@@ -33,8 +31,6 @@ class IsolateSupervisor {
   bool _isDisposed = false;
 
   Capability? _resumeCapability;
-
-  bool get isStarted => _isStarted;
 
   bool get isInitialized => _isInitialized;
 
@@ -89,14 +85,10 @@ class IsolateSupervisor {
   }
 
   Future<void> start(Map<String, dynamic> data) async {
-    if (!_isStarted) {
-      _isolateSendPort!.send(TaskStart(data));
+    _isolateSendPort!.send(TaskStart(data));
 
-      await _eventController.stream
-          .firstWhere((element) => element is TaskStarted);
-
-      _isStarted = true;
-    }
+    await _eventController.stream
+        .firstWhere((element) => element is TaskStarted);
   }
 
   void _handleMessage(dynamic message) {
@@ -147,7 +139,6 @@ class IsolateSupervisor {
 
       _isolate = null;
 
-      _isStarted = false;
       _isInitialized = false;
       _isPaused = false;
     }
