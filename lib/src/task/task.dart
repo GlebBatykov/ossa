@@ -11,7 +11,7 @@ class Task<T> {
   final StreamController<TaskError> _errorController =
       StreamController.broadcast();
 
-  StreamController<T>? _resultController;
+  StreamController<T?>? _resultController;
 
   final IsolateSupervisor _isolateSupervisor;
 
@@ -60,7 +60,7 @@ class Task<T> {
     _result = event.result as T;
 
     _onDone?.call(_result!);
-    _resultController?.sink.add(_result!);
+    _resultController?.sink.add(_result);
 
     if (_type == TaskType.oneShot) {
       await dispose();
@@ -73,9 +73,10 @@ class Task<T> {
   ///
   static Future<Task<T>> run<T>(TaskActionCallback<T> action,
       {TaskOnErrorCallback? onError,
+      TaskOnDoneCallback<T>? onDone,
       Map<String, dynamic>? data,
       TaskType type = TaskType.oneShot}) async {
-    var task = Task<T>(action, onError: onError, type: type);
+    var task = Task<T>(action, onError: onError, onDone: onDone, type: type);
 
     await task.initialize();
     await task.start(data: data);
@@ -98,11 +99,11 @@ class Task<T> {
   Future<void> start(
       {Map<String, dynamic>? data, void Function(TaskError)? onError}) async {
     if (_status == TaskStatus.waitingToRun) {
-      ErrorSubscription? onErrorSubscription;
+      Subscription? onErrorSubscription;
 
       if (onError != null) {
         onErrorSubscription =
-            ErrorSubscription(_errorController.stream.listen((error) {
+            Subscription(_errorController.stream.listen((error) {
           onError(error);
 
           onErrorSubscription!.cancel();
@@ -176,25 +177,25 @@ class Task<T> {
 
       StreamController streamController = StreamController();
 
-      late ErrorSubscription onErrorSubscription;
+      late Subscription onErrorSubscription;
 
       onErrorSubscription =
-          ErrorSubscription(_errorController.stream.listen((error) {
+          Subscription(_errorController.stream.listen((error) {
         streamController.sink.add(error);
 
         onErrorSubscription.cancel();
       }));
 
-      Future(() async {
-        var result = await _resultController!.stream.first;
-
+      var onResultSubscription =
+          Subscription(_resultController!.stream.listen((result) {
         streamController.sink.add(result);
-      });
+      }));
 
       var result = await streamController.stream.first;
 
       await streamController.close();
       await _resultController!.close();
+      onResultSubscription.cancel();
 
       if (result is TaskError) {
         throw TaskCompleteException(result.object, result.stackTrace);
