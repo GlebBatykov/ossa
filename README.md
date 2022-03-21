@@ -1,39 +1,35 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+</div>
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+<div align="center">
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+**Languages:**
+  
+[![English](https://img.shields.io/badge/Language-English-blue?style=?style=flat-square)](README.md)
+[![Russian](https://img.shields.io/badge/Language-Russian-blue?style=?style=flat-square)](README.ru.md)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+</div>
 
-## Features
+- [Introduction](#introduction)
+- [About Ossa](#about-ossa)
+- [Installing](#installing)
+- [What is Task](#what-is-task)
+  - [Task run](#task-run)
+  - [Get result](#get-result)
+- [Error handling](#error-handling)
+- [Task types](#task-types)
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+# Introduction
 
-## Getting started
+# About Ossa
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+# Installing
 
-## Usage
+# What is Task
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+## Task run
 
-```dart
-const like = 'sample';
-```
+## Get result
 
-## Additional information
+# Error handling
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+# Task types
