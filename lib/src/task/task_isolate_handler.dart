@@ -1,4 +1,4 @@
-part of theater_task.task;
+part of ossa.task;
 
 class TaskIsolateHandler {
   final IsolateContext _isolateContext;

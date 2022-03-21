@@ -1,9 +1,9 @@
-library theater_task.task;
+library ossa.task;
 
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:theater_task/src/isolate.dart';
+import 'package:ossa/src/isolate.dart';
 
 import 'core.dart';
 

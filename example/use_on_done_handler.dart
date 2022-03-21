@@ -1,4 +1,4 @@
-import 'package:theater_task/theater_task.dart';
+import 'package:ossa/ossa.dart';
 
 void main() async {
   late Task task;

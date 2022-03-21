@@ -1,4 +1,4 @@
-part of theater_task.isolate;
+part of ossa.isolate;
 
 class IsolateSupervisor {
   final StreamController<TaskEvent> _messageController =

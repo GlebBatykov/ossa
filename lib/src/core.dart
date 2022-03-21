@@ -1,4 +1,4 @@
-library theater_task.core;
+library ossa.core;
 
 import 'dart:async';
 

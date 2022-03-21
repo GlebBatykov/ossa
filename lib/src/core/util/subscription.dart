@@ -1,4 +1,4 @@
-part of theater_task.core;
+part of ossa.core;
 
 class Subscription {
   bool _isCancel = false;
