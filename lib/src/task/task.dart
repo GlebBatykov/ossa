@@ -11,13 +11,13 @@ class Task<T> {
   final StreamController<TaskError> _errorController =
       StreamController.broadcast();
 
-  StreamController<T?>? _resultController;
-
   final IsolateSupervisor _isolateSupervisor;
 
   final TaskType _type;
 
   final TaskOnDoneCallback<T>? _onDone;
+
+  StreamController<T?>? _resultController;
 
   TaskStatus _status = TaskStatus.notInitialized;
 
@@ -39,9 +39,18 @@ class Task<T> {
       _errorController.add(TaskError(error.object, error.stackTrace));
     });
 
-    if (onError != null) {
-      _errorController.stream.listen(onError);
-    }
+    _errorController.stream.listen(onError != null
+        ? (error) {
+            if (_resultController == null) {
+              _isStarted = false;
+              _status = TaskStatus.waitingToRun;
+            }
+
+            onError(error);
+          }
+        : (event) async {
+            await dispose();
+          });
 
     _isolateSupervisor.messages.listen((event) {
       if (event is TaskCompleted) {
@@ -173,7 +182,7 @@ class Task<T> {
   ///
   Future<T> result() async {
     if (_isStarted) {
-      _resultController = StreamController();
+      _resultController = StreamController<T>();
 
       StreamController streamController = StreamController();
 
