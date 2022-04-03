@@ -47,6 +47,7 @@
 ## Типы задач
 
 Задачи бывают двух типов:
+
 - одноразовые задачи (по умолчанию);
 - переиспользуемые задачи.
 
@@ -57,17 +58,42 @@
 ## Запуск задачи
 
 Запустить задачу можно двумя способами:
+
 - при помощи метода run;
 - создав задачу, проиницализировав её и самостоятельно её запустив.
 
 Пример запуска при помощи метода run:
 
 ```dart
+void main() async {
+  // Create and run Task using run method
+  var task = await Task.run((context) {
+    print('Hello, from task!');
+  });
+
+  // Wait when task is completed
+  await task.result();
+}
 ```
 
 Пример запуска создавая задачу, проинициализировав её и запустив:
 
 ```dart
+void main() async {
+  // Create task
+  var task = Task((context) {
+    print('Hello, from task!');
+  });
+
+  // Initialize task before work with him
+  await task.initialize();
+
+  // Start task
+  await task.start();
+
+  // Whait when task is completed
+  await task.result();
+}
 ```
 
 ## Получение результата
@@ -81,13 +107,40 @@
 Получение результата из Future полученного при вызове метода result:
 
 ```dart
+void main() async {
+  // Create and run Task with double return type using run method
+  var task = await Task.run<double>((context) => 3 * 7);
 
+  // Wait result from Task
+  var result = await task.result();
+
+  print(result);
+}
+```
+
+Ожидаемый вывод:
+
+```dart
+21
 ```
 
 Ассинхронное получение результата при помощи onDone обработчика:
 
 ```dart
+void main() async {
+  // Create and run task with int return type, set onDone handler
+  var task = await Task.run<int>((context) {
+    return 5 * 10;
+  }, onDone: (value) async {
+    print(value);
+  });
+}
+```
 
+Ожидаемый вывод:
+
+```dart
+50
 ```
 
 # Обработка ошибок
@@ -95,16 +148,52 @@
 Во время выполнения задачи может возникнуть исключение.
 
 Есть варианта его обработки:
+
 - обработка при помощи onError обработчика;
 - заключение части кода с ожиданием результата в try/catch.
 
 Пример обработки исключения при помощи onError обработчика, ассинхронно обрабатывая результат выполнения задачи:
 
 ```dart
+void main() async {
+  late Task task;
+
+  // Create and run Task using run method, set onError handler
+  task = await Task.run<void>((context) {
+    throw FormatException();
+  }, onError: (error) async {
+    print(error.object.toString());
+
+    task.dispose();
+  });
+}
 ```
 
 Если при старте задачи не был задан onError обработчик, то есть 2 сценария что произойдет с ним:
+
 - если вы ожидаете результат задачи ассинхронно, то есть при помощи onDone обработчика, то ничего не произойдет, исключение не будет никак обработанно. Задача из статуса выполнения () перейдет в статус готова к выполнению ();
 - если вы ожидаете результат задачи при помощи метода result, то исключение будет вызванно повторно вызванно уже в методе result.
 
-Пример обработки исключения без onError обработчика
+Пример обработки исключения без onError обработчика, ожидая результат при помощи метода result:
+
+```dart
+void main() async {
+  // Create and run Task using run method
+  var task = await Task.run((context) {
+    throw FormatException();
+  });
+
+  try {
+    // Wait when task is completed
+    await task.result();
+  } catch (object) {
+    // Handle error
+
+    if (object is TaskCompleteException) {
+      print(object);
+
+      await task.dispose();
+    }
+  }
+}
+```
