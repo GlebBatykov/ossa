@@ -1,11 +1,11 @@
 import 'package:ossa/ossa.dart';
 
 void main() async {
-  //
-  var task = await Task.run<double>((context) => 3 * 7);
+  // Create and run Task using run method
+  var task = await Task.run((context) {
+    print('Hello, from task!');
+  });
 
-  //
-  var result = await task.result();
-
-  print(result);
+  // Wait when task is completed
+  await task.result();
 }

@@ -1,18 +1,17 @@
 import 'package:ossa/ossa.dart';
 
 void main() async {
-  //
-  var task = Task<String>((context) {
-    return 'Hello, world!';
+  // Create task
+  var task = Task((context) {
+    print('Hello, from task!');
   });
 
-  //
+  // Initialize task before work with him
   await task.initialize();
-  //
+
+  // Start task
   await task.start();
 
-  //
-  var result = await task.result();
-
-  print(result);
+  // Whait when task is completed
+  await task.result();
 }

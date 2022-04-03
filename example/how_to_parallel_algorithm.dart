@@ -1,7 +1,7 @@
 import 'package:ossa/ossa.dart';
 
 void main() async {
-  //
+  // We have some initial data
   var data = List<double>.generate(5, (index) => index.toDouble());
 
   //
