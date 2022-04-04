@@ -12,6 +12,6 @@ void main() async {
   // Start task
   await task.start();
 
-  // Whait when task is completed
+  // Wait when task is completed
   await task.result();
 }
