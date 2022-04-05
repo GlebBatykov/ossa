@@ -22,7 +22,7 @@
 
 # Introduction
 
-Earlier, in order to simplify interactions with isolates in Dart, I started developing actor framework - [Theater](#https://github.com/GlebBatykov/theater).
+Earlier, in order to simplify interactions with isolates in Dart, I started developing actor framework - [Theater](https://github.com/GlebBatykov/theater).
 
 However, not everyone can like both the actor model itself, which is implemented by isolates in Dart, and the actor framework.
 
