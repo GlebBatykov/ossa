@@ -69,7 +69,6 @@ class Task<T> {
     _result = event.result as T;
 
     _onDone?.call(_result!);
-    _resultController?.sink.add(_result);
 
     if (_type == TaskType.oneShot) {
       await dispose();
@@ -77,6 +76,8 @@ class Task<T> {
       _isStarted = false;
       _status = TaskStatus.waitingToRun;
     }
+
+    _resultController?.sink.add(_result);
   }
 
   /// Creates task.
