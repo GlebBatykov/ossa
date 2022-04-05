@@ -6,7 +6,7 @@ typedef TaskOnErrorCallback = void Function(TaskError);
 
 typedef TaskOnDoneCallback<T> = void Function(T);
 
-///
+/// Used to create a task to run in another isolate.
 class Task<T> {
   final StreamController<TaskError> _errorController =
       StreamController.broadcast();
@@ -25,7 +25,7 @@ class Task<T> {
 
   T? _result;
 
-  ///
+  /// Current status of task.
   TaskStatus get status => _status;
 
   Task(TaskActionCallback<T> action,
@@ -79,7 +79,11 @@ class Task<T> {
     }
   }
 
+  /// Creates task.
   ///
+  /// Once created, it initializes the task, runs it, and returns an instance of it.
+  ///
+  /// Changes the status of the task to [TaskStatus.running].
   static Future<Task<T>> run<T>(TaskActionCallback<T> action,
       {TaskOnErrorCallback? onError,
       TaskOnDoneCallback<T>? onDone,
@@ -93,7 +97,11 @@ class Task<T> {
     return task;
   }
 
+  /// Initializes task.
   ///
+  /// Creates a task isolate during initialization.
+  ///
+  /// Changes the status of the task to [TaskStatus.waitingToRun].
   Future<void> initialize() async {
     if (_status == TaskStatus.notInitialized) {
       await _isolateSupervisor.initialize();
@@ -104,7 +112,12 @@ class Task<T> {
     }
   }
 
+  /// Starts the execution of a task.
   ///
+  /// [data] - passes this data to the task, it can be accessed using the task context.
+  /// [onError] - error handler that is used in this task execution.
+  ///
+  /// Changes the status of the task to [TaskStatus.running].
   Future<void> start(
       {Map<String, dynamic>? data, void Function(TaskError)? onError}) async {
     if (_status == TaskStatus.waitingToRun) {
@@ -141,7 +154,9 @@ class Task<T> {
     }
   }
 
+  /// Pauses task.
   ///
+  /// Pauses task isolate and changes the status of the task to [TaskStatus.paused].
   Future<void> pause() async {
     if (_status == TaskStatus.running) {
       await _isolateSupervisor.pause();
@@ -152,7 +167,9 @@ class Task<T> {
     }
   }
 
+  /// Resumes task.
   ///
+  /// Resumes task isolate and changes the status of the task to [TaskStatus.running]
   Future<void> resume() async {
     if (_status == TaskStatus.paused) {
       await _isolateSupervisor.resume();
@@ -167,19 +184,27 @@ class Task<T> {
     }
   }
 
+  /// Kills task.
   ///
+  /// Kills task isolate and changes the status of the task to [TaskStatus.notInitialized].
   Future<void> kill() async {
     if ([TaskStatus.running, TaskStatus.waitingToRun, TaskStatus.paused]
         .contains(_status)) {
       await _isolateSupervisor.kill();
 
       _isStarted = false;
+
+      _status = TaskStatus.notInitialized;
     } else {
       throw TaskException(message: 'Task is not initialized.');
     }
   }
 
+  /// Return result of task.
   ///
+  /// If task is running, will wait for the result from the isolate, and then return it.
+  ///
+  /// If task has already been completed at the time of calling the result method and has not been started again, it will return the result from the previous task run.
   Future<T> result() async {
     if (_isStarted) {
       _resultController = StreamController<T>();
@@ -220,7 +245,11 @@ class Task<T> {
     }
   }
 
+  /// Disposes task.
   ///
+  /// Disposes task. Kills task isolate, closes all StreamControllers-s.
+  ///
+  /// Further use of this task instance is not possible.
   Future<void> dispose() async {
     if (_status != TaskStatus.disposed) {
       await _errorController.close();

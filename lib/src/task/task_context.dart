@@ -1,12 +1,12 @@
 part of ossa.task;
 
-///
+/// Used to access data passed to the task.
 class TaskContext {
   final Map<String, dynamic> _data;
 
   TaskContext(Map<String, dynamic> data) : _data = data;
 
-  ///
+  /// Check if exist instance with name [instanceName] in store.
   bool isExist(String instanceName) {
     return _data.keys.contains(instanceName);
   }
