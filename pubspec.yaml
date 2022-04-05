@@ -1,6 +1,6 @@
 name: ossa
 description: A simple package for working with multithreading, using an interface similar to tasks in C#.
-version: 1.0.0
+version: 1.0.2
 repository: https://github.com/GlebBatykov/ossa
 
 environment:

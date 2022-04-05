@@ -26,7 +26,7 @@ Earlier, in order to simplify interactions with isolates in Dart, I started deve
 
 However, not everyone can like both the actor model itself, which is implemented by isolates in Dart, and the actor framework.
 
-In addition to Dart, I also write in C # and, as for me, it has a convenient wrapper for working with multithreading - Task.
+In addition to Dart, I also write in C# and, as for me, it has a convenient wrapper for working with multithreading - Task.
 
 I decided to do something in Dart as similar as possible to Task in C#, but with some nuances due to the fact that isolates are still used under the hood.
 
@@ -40,7 +40,7 @@ Add Ossa to your pubspec.yaml file:
 
 ```dart
 dependencies:
-  ossa: ^1.0.0
+  ossa: ^1.0.2
 ```
 
 Import ossa in file that it will be used:
