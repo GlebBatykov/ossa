@@ -109,7 +109,7 @@ class Task<T> {
 
       _status = TaskStatus.waitingToRun;
     } else {
-      throw TaskException(message: '');
+      throw TaskException(message: 'Task was initialized.');
     }
   }
 
@@ -259,7 +259,7 @@ class Task<T> {
       _status = TaskStatus.disposed;
       _isStarted = false;
     } else {
-      throw TaskException(message: 'Task ');
+      throw TaskException(message: 'Task was disposed.');
     }
   }
 }
