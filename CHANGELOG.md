@@ -2,6 +2,7 @@
 
 - Add error messages for exceptions in Task.
 - Update documentation.
+- Update examples.
 - Fixes the use of asynchronous operations inside the task.
 
 ## 1.0.2
