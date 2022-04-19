@@ -40,7 +40,7 @@ Add Ossa to your pubspec.yaml file:
 
 ```dart
 dependencies:
-  ossa: ^1.0.2
+  ossa: ^1.0.3
 ```
 
 Import ossa in file that it will be used:
