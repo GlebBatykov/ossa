@@ -3,7 +3,7 @@ part of ossa.task;
 class TaskIsolateHandler {
   final IsolateContext _isolateContext;
 
-  final dynamic Function(TaskContext) _action;
+  final TaskActionCallback _action;
 
   TaskIsolateHandler(
       IsolateContext isolateContext, dynamic Function(TaskContext) action)
@@ -17,7 +17,7 @@ class TaskIsolateHandler {
 
     var context = TaskContext(action.data);
 
-    var result = _action.call(context);
+    var result = await _action.call(context);
 
     _isolateContext.supervisorMessagePort.send(TaskCompleted(result));
   }

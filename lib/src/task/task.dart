@@ -1,6 +1,6 @@
 part of ossa.task;
 
-typedef TaskActionCallback<T> = T Function(TaskContext);
+typedef TaskActionCallback<T> = FutureOr<T> Function(TaskContext);
 
 typedef TaskOnErrorCallback = void Function(TaskError);
 
