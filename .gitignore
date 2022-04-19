@@ -1,10 +1,10 @@
 # Files and directories created by pub.
 .dart_tool/
 .packages
-bin/
 
 # Conventional directory for build outputs.
 build/
+bin/
 
 # Omit committing pubspec.lock for library packages; see
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
