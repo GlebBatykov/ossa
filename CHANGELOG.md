@@ -1,4 +1,8 @@
-# 1.0.3
+# 1.0.4
+
+- Update documentation.
+
+## 1.0.3
 
 - Add error messages for exceptions in Task.
 - Update documentation.
