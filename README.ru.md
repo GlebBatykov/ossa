@@ -1,6 +1,6 @@
-</div>
-
 <div align="center">
+
+[![pub package](https://img.shields.io/pub/v/ossa.svg?label=ossa&color=blue)](https://pub.dev/packages/ossa)
 
 **Языки:**
   
@@ -40,7 +40,7 @@
 
 ```dart
 dependencies:
-  ossa: ^1.0.3
+  ossa: ^1.0.4
 ```
 
 Импортируйте ossa в файле где он должен использоваться:

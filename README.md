@@ -1,6 +1,6 @@
-</div>
-
 <div align="center">
+
+[![pub package](https://img.shields.io/pub/v/ossa.svg?label=ossa&color=blue)](https://pub.dev/packages/ossa)
 
 **Languages:**
   
@@ -40,7 +40,7 @@ Add Ossa to your pubspec.yaml file:
 
 ```dart
 dependencies:
-  ossa: ^1.0.3
+  ossa: ^1.0.4
 ```
 
 Import ossa in file that it will be used:
